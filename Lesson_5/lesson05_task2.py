@@ -10,7 +10,7 @@ def main():
     options = webdriver.ChromeOptions()
    
 
-    driver = webdriver.Chrome
+    driver = webdriver.Chrome()
 
         driver.get("http://uitestingplayground.com/dynamicid")
 
