@@ -8,7 +8,7 @@ def main():
     
     options = webdriver.FirefoxOptions()
     
-    driver = webdriver.Firefox(service=service, options=options)
+    driver = webdriver.Firefox()
 
     try:
         driver.get("http://the-internet.herokuapp.com/inputs")
