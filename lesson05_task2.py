@@ -8,7 +8,7 @@ def main():
     
     service = Service()  
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome
+    driver = webdriver.Chrome()
 
     try:
         driver.get("http://uitestingplayground.com/dynamicid")
