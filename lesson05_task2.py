@@ -6,9 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def main():
     
-    service = Service()  # например: Service('/path/to/chromedriver')
+    service = Service()  
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome
 
     try:
         driver.get("http://uitestingplayground.com/dynamicid")
@@ -16,9 +16,12 @@ def main():
         wait = WebDriverWait(driver, 10)
 
 
-        button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn.btn-primary")))
+     button = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn-primary"))
+)
 
-        button.click()
+button.click()
+        
 
     finally:
         driver.quit()
