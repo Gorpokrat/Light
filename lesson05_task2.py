@@ -8,8 +8,6 @@ def main():
     
     service = Service()  # например: Service('/path/to/chromedriver')
     options = webdriver.ChromeOptions()
-   
-
     driver = webdriver.Chrome(service=service, options=options)
 
     try:
