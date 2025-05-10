@@ -6,8 +6,7 @@ import time
 def main():
     
     options = webdriver.ChromeOptions()
-    driver = webdriver.Chrome(service=service, options=options)
-
+    driver = webdriver.Chrome
     try:
         driver.get("http://uitestingplayground.com/dynamicid")
         time.sleep(1)
