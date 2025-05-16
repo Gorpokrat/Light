@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 def main():
     
     
-    options = webdriver.ChromeOptions()
+   
    
 
     driver = webdriver.Chrome()
