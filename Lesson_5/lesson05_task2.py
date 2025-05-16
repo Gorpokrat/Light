@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def main():
     
-    service = Service()  # например: Service('/path/to/chromedriver')
+    
     options = webdriver.ChromeOptions()
    
 
