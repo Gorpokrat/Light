@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def main():
    
-    options = webdriver.FirefoxOptions()
     
     driver = webdriver.Firefox()
 
