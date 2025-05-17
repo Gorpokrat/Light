@@ -5,23 +5,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 def main():
-    
-    
-   
-   
-
     driver = webdriver.Chrome()
 
+    try:
         driver.get("http://uitestingplayground.com/dynamicid")
-
-        wait = WebDriverWait(driver, 10)
-
-
-       button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn-primary"))
-)
-
-button.click()
+        button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, "button.btn-primary")))
+        button.click()
 
     finally:
         driver.quit()
