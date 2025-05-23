@@ -1,0 +1,53 @@
+import pytest
+from selenium import webdriver
+
+from pages.authorization_page import AuthorizationPage
+from pages.products_page import ProductsPage
+from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
+
+def test_shopping_flow():
+    driver = webdriver.Chrome()
+    try:
+        # Создаем объекты страниц
+        auth_page = AuthorizationPage(driver)
+        products_page = ProductsPage(driver)
+        cart_page = CartPage(driver)
+        checkout_page = CheckoutPage(driver)
+
+        # Открываем сайт и авторизуемся
+        auth_page.open()
+        auth_page.login("standard_user", "secret_sauce")
+
+        # Добавляем товары в корзину
+        products_to_add = [
+            "Sauce Labs Backpack",
+            "Sauce Labs Bolt T-Shirt",
+            "Sauce Labs Onesie"
+        ]
+        
+        for product in products_to_add:
+            products_page.add_product_to_cart(product)
+
+        # Переходим в корзину и начинаем оформление заказа
+        products_page.go_to_cart()
+        
+        # На странице корзины нажимаем Checkout
+        cart_page.checkout()
+
+        # Заполняем форму и продолжаем оформление заказа
+        checkout_page.fill_form("Иван", "Иванов", "12345")
+        checkout_page.continue_checkout()
+
+        # Получаем итоговую сумму и проверяем её значение
+        total_text = checkout_page.get_total()
+        
+        print(f"Итоговая сумма: {total_text}")
+        
+    finally:
+        driver.quit()
+
+    assert "$58.29" in total_text
+
+if __name__ == "__main__":
+    pytest.main()
