@@ -46,8 +46,9 @@ def test_shopping_flow():
         
     finally:
         driver.quit()
-
-    assert "$58.29" in total_text
+total_text = checkout_page.get_total()
+print(f"Итоговая сумма: {total_text}")
+assert total_text == "Total: $58.29"
 
 if __name__ == "__main__":
     pytest.main()
