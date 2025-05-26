@@ -1,0 +1,107 @@
+import pytest
+import requests
+
+BASE_URL = "https://api.yougile.com"
+
+class ProjectsAPI:
+    """PageObject для работы с проектами через API."""
+    def __init__(self, base_url):
+        self.base_url = base_url
+
+    def create_project(self, name, description=None):
+        payload = {"name": name}
+        if description:
+            payload["description"] = description
+        response = requests.post(f"{self.base_url}/api-v2/projects", json=payload)
+        return response
+
+    def update_project(self, project_id, name=None, description=None):
+        payload = {}
+        if name:
+            payload["name"] = name
+        if description:
+            payload["description"] = description
+        response = requests.put(f"{self.base_url}/api-v2/projects/{project_id}", json=payload)
+        return response
+
+    def get_project(self, project_id):
+        response = requests.get(f"{self.base_url}/api-v2/projects/{project_id}")
+        return response
+
+@pytest.fixture(scope="module")
+def api():
+    return ProjectsAPI(BASE_URL)
+
+@pytest.fixture
+def created_project(api):
+    # Создаем проект для тестов и удаляем после
+    response = api.create_project("Тестовый проект")
+    assert response.status_code == 201
+    project_id = response.json().get("id")
+    yield project_id
+    # Очистка: удаление проекта (если есть такой метод) — здесь предполагается его наличие.
+    # Если метода удаления нет — можно оставить или реализовать отдельный метод.
+    # Например:
+    # api.delete_project(project_id)
+
+# ============================
+# Тесты для метода POST /api-v2/projects
+# ============================
+
+def test_create_project_positive(api):
+    """Позитивный тест: создание проекта успешно."""
+    response = api.create_project("Новый проект")
+    assert response.status_code == 201
+    data = response.json()
+    assert "id" in data
+    # Очистка созданного проекта (если есть метод удаления)
+    # api.delete_project(data["id"])
+
+def test_create_project_negative(api):
+    """Негативный тест: создание проекта без обязательных полей."""
+    # Отправляем пустой JSON или некорректные данные
+    response = requests.post(f"{BASE_URL}/api-v2/projects", json={})
+    # Предполагается, что сервер возвращает 400 или 422 при ошибке валидации
+    assert response.status_code in [400, 422]
+
+# ============================
+# Тесты для метода PUT /api-v2/projects/{id}
+# ============================
+
+def test_update_project_positive(api, created_project):
+    """Позитивный тест: обновление существующего проекта."""
+    new_name = "Обновленный проект"
+    new_description = "Новое описание"
+    
+    response = api.update_project(created_project, name=new_name, description=new_description)
+    assert response.status_code == 200
+    
+    data = response.json()
+    assert data["name"] == new_name
+    assert data["description"] == new_description
+
+def test_update_project_negative(api):
+    """Негативный тест: обновление несуществующего проекта."""
+    invalid_id = "non-existent-id"
+    response = api.update_project(invalid_id, name="Test")
+    
+    # Предполагается, что сервер возвращает 404 для несуществующего ресурса
+    assert response.status_code == 404
+
+# ============================
+# Тесты для метода GET /api-v2/projects/{id}
+# ============================
+
+def test_get_project_positive(api, created_project):
+    """Позитивный тест: получение существующего проекта."""
+    response = api.get_project(created_project)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["id"] == created_project
+
+def test_get_project_negative(api):
+   """Негативный тест: получение несуществующего проекта."""
+   invalid_id = "non-existent-id"
+   response = api.get_project(invalid_id)
+   # Ожидаемый статус — 404 или подобное сообщение об ошибке.
+   assert response.status_code == 404
