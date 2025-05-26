@@ -1,5 +1,7 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from calculator_page import CalculatorPage
 
 def test_slow_calculator():
@@ -19,10 +21,13 @@ def test_slow_calculator():
         calculator.click_button("8")
         calculator.click_button("=")
 
-        # Ждем примерно 45 секунд для отображения результата
-        time.sleep(45)
+        # Используем явное ожидание появления результата "15"
+        wait = WebDriverWait(driver, 46)
+        wait.until(
+            EC.text_to_be_present_in_element(calculator.result_locator, "15")
+        )
 
-        # Проверка результата
+        # Получаем и проверяем результат
         result = calculator.get_result()
         assert result == "15", f"Expected '15', but got '{result}'"
 
