@@ -3,6 +3,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 import allure
 
+
 class CartPage:
     """
     Класс страницы корзины.
@@ -24,6 +25,8 @@ class CartPage:
         """
         Переходит к оформлению заказа.
 
-       :return: None
-       """
-       self.driver.find_element(*self.checkout_button_locator).click()
+        :return: None
+        """
+        self.driver.find_element(
+            *self.checkout_button_locator
+        ).click()
