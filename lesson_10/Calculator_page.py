@@ -7,9 +7,9 @@ class CalculatorPage:
 
         # Локатор поля задержки
         self.delay_input_locator = (By.CSS_SELECTOR, "#delay")
-        # Локатор результата
+        # Локатор результата (заменено на CSS-селектор .screen)
         self.result_locator = (By.CSS_SELECTOR, ".screen")
-        # Обновленный шаблон XPath для кнопок <span>
+        # Шаблон XPath для кнопок <span>
         self.button_xpath_template = "//span[text()='{}']"
 
     def open(self):
