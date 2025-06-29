@@ -1,7 +1,13 @@
-if lst: '🍇', '🍑', '🍐', '🍊', '🍌', '🍎'
-    first_element = lst[0]  
-    last_element = lst[-1]  
-    print("Первый элемент:", first_element)
-    print("Последний элемент:", last_element)
-else:
-    print("Список пуст.")
+lst = ['🍇', '🍑', '🍐', '🍊', '🍌', '🍎']
+
+# l = len(lst)
+
+# for n in range (0, l):
+#    if (n == 0) or (n == l-1):
+#        print(lst[n])
+
+# Shortly:
+
+for n in range(0, len(lst)):
+    if (n == 0) or (n == len(lst)-1):
+        print(lst[n])
