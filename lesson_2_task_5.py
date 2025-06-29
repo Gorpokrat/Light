@@ -1,16 +1,17 @@
-def month_to_season(month):
-    if month in [12, 1, 2]:
-        return "Зима"
-    elif month in [3, 4, 5]:
-        return "Весна"
-    elif month in [6, 7, 8]:
-        return "Лето"
-    elif month in [9, 10, 11]:
-        return "Осень"
-    else:
-        return "Некорректный номер месяца"
+m = int(input("Введите номер месяца: "))
 
-#Пример 
-month_number = 2  # Вы можете изменить это значение на любое другое
-season = month_to_season(month_number)
-print(f"Месяц {month_number}: {season}")
+
+def month_to_season(m):
+    if (m > 2 and m < 6):
+        print("Весна")
+    elif (m > 5 and m < 9):
+        print("Лето")
+    elif (m > 8 and m < 12):
+        print("Осень")
+    elif (m == 12 or m == 1 or m == 2):
+        print("Зима")
+    else:
+        print("Нет такого месяца в Григорианском календаре!")
+
+
+month_to_season(m)
